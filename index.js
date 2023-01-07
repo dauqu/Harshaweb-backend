@@ -23,7 +23,8 @@ const allowedOrigins = [
   "https://vs-panel-website.vercel.app",
   "http://192.168.1.100:3000",
   "http://192.168.1.102:3000",
-  "https://harsha-web-react.vercel.app/"
+  "https://harsha-web-react.vercel.app",
+  "https://www.harshaweb.com"
 ];
 
 app.use(
