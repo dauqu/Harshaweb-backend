@@ -6,6 +6,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookiParser = require("cookie-parser");
 
+
 router.use(cookiParser());
 
 router.post("/", async (req, res) => {
@@ -50,7 +51,7 @@ router.post("/", async (req, res) => {
         //     email: user_collection.email, 
         // }; 
         
-        res.setHeader("x-auth-token", token);
+        // res.setHeader("x-auth-token", token);
         res.cookie("auth_token", token);
         res.status(200).json({ message: "login success", status: "success", token: token });
  
@@ -76,7 +77,7 @@ router.get("/check_have_token", (req, res) => {
 
 
         // check same id have database
-        const user_id = Admin.findById(id_from_token);
+        const user_id = user.findById(id_from_token);
         if (user_id == undefined) {
             res.json(false)
         }
@@ -112,7 +113,7 @@ router.get("/checkLogin", (req, res) => {
         const id_from_token = have_valid_token.id;
 
         // check same id have same database
-        const user_id = Admin.findById(id_from_token);
+        const user_id = user.findById(id_from_token);
         if (user_id == undefined) {
             res.json(false)
         }

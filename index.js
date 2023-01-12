@@ -91,6 +91,9 @@ app.use("/api/website_request", require("./routes/web_req"));
 //app request
 app.use("/api/app_request", require("./routes/app_req"));
 
+//payment razorpay
+app.use("/api/payment", require("./routes/razorpay"));
+
 
 
 // vendor signup

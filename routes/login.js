@@ -5,7 +5,7 @@ require("dotenv").config();
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookiParser = require("cookie-parser");
-const AdminSchema = require("./../models/Admin");
+// const AdminSchema = require("./../models/Admin");
 
 router.use(cookiParser());
 
@@ -74,7 +74,7 @@ router.get("/check_valid_token", async (req, res) => {
   const id_from_token = have_valid_tokem.id;
 
   //Check Same id have database
-  const user = await AdminSchema.findOne({ id_from_token }).lean();
+  const user = await Admin.findOne({ id_from_token }).lean();
 
   if (user == undefined || user == null || user == "") {
     res.json(false);
