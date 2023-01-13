@@ -51,8 +51,6 @@ router.post("/", async (req, res) => {
         //     email: user_collection.email, 
         // }; 
         
-        // res.setHeader("x-auth-token", token);
-        res.cookie("auth_token", token);
         res.status(200).json({ message: "login success", status: "success", token: token });
  
     } catch (error) {
@@ -63,9 +61,11 @@ router.post("/", async (req, res) => {
 
 // check user is login or not 
 router.get("/check_have_token", (req, res) => {
+    const token = req.cookies.auth_token || req.headers["auth_token"] || req.body.token;
+    console.log("hello "+ token);
     try {
         const have_valid_token = jwt.verify(
-            req.cookies.token,
+            token,
             process.env.JWT_SECRET
         )
 

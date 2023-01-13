@@ -4,10 +4,7 @@ const Admin = require("../models/Admin");
 require("dotenv").config();
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookiParser = require("cookie-parser");
-// const AdminSchema = require("./../models/Admin");
 
-router.use(cookiParser());
 
 router.post("/", async (req, res) => {
     try {
@@ -36,15 +33,6 @@ router.post("/", async (req, res) => {
             sameSite: "none",
             secure: true,
         })
-
-        // // set localstorage 
-        // res.locals.admin = {
-        //     id: admin._id,
-        //     email: admin.email,
-        // };
-
-        res.setHeader("x-auth-token", token);
-        res.cookie("auth-token", token);
 
         res.status(200).json({ message: "login success", status: "success", token: token });
 
