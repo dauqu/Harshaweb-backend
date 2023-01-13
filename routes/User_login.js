@@ -32,10 +32,7 @@ router.post("/", async (req, res) => {
             email: user_collection.email,
             age: user_collection.age
         }, 
-           process.env.JWT_SECRET,
-        {
-            algorithm: "HS256",
-        }
+           process.env.JWT_SECRET
         )
         // cookies
         res.cookie("auth_token", token, {
@@ -60,15 +57,13 @@ router.post("/", async (req, res) => {
 
 
 // check user is login or not 
-router.get("/check_have_token", (req, res) => {
+router.get("/check_have_token", async (req, res) => {
     const token = req.cookies.auth_token || req.headers["auth_token"] || req.body.token;
     console.log("hello "+ token);
     try {
-        const have_valid_token = jwt.verify(
+        const have_valid_token = await jwt.verify(
             token,
-            process.env.JWT_SECRET,{
-                algorithms: "HS256",
-            }
+            process.env.JWT_SECRET
         )
 
         // get user if from token
@@ -92,14 +87,11 @@ router.get("/check_have_token", (req, res) => {
 })
 
 // check valid token 
-router.get("/check_valid_token", (req, res) => {
+router.get("/check_valid_token", async (req, res) => {
     try {
-        const have_valid_token = jwt.verify(
+        const have_valid_token = await jwt.verify(
             req.cookies.token,
-            process.env.JWT_SECRET,
-            {
-                algorithms: "HS256",
-            }
+            process.env.JWT_SECRET
         )
         res.json(true);
     } catch (error) {
@@ -112,10 +104,7 @@ router.get("/checkLogin", (req, res) => {
     try {
         const have_valid_token = jwt.verify(
             req.cookies.token,
-            process.env.JWT_SECRET,
-            {
-                algorithms: "HS256"
-            }
+            process.env.JWT_SECRET
         )
         // get user id from token 
         const id_from_token = have_valid_token.id;

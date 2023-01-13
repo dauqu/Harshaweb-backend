@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 router.post("/", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const admin_collection = await User.findOne({ email }).lean();
+    const admin_collection = await User.findOne({ email });
     if (!admin_collection)
       return res
         .status(400)
@@ -28,18 +28,16 @@ router.post("/", async (req, res) => {
     // token
     const token = jwt.sign(
       { id: admin_collection._id, email: admin_collection.email },
-      process.env.JWT_SECRET,
-      {
-        algorithm: "HS256",
-        expiresIn: "1d",
-      }
+      process.env.JWT_SECRET
     );
 
     // cookies
     res.cookie("auth_token", token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: true
     });
+
 
     res.status(200).json({ message: "login success !!", status: "success", token: token });
   } catch (error) {
@@ -58,9 +56,7 @@ router.get("/check_valid_token", async (req, res) => {
       return res.json(false);
     }
 
-    const have_valid_tokem = await jwt.verify(token, process.env.JWT_SECRET, {
-      algorithm: "HS256",
-    });
+    const have_valid_tokem = await jwt.verify(token, process.env.JWT_SECRET);
     if (!have_valid_tokem) {
       return res.json(false);
     }
@@ -81,14 +77,11 @@ router.get("/check_valid_token", async (req, res) => {
 });
 
 // check token id is same with user id
-router.get("/checkLogin", (req, res) => {
+router.get("/checkLogin", async (req, res) => {
   try {
-    const have_valid_token = jwt.verify(
+    const have_valid_token = await jwt.verify(
       req.cookies.token,
-      process.env.JWT_SECRET,
-      {
-        algorithm: "HS256",
-      }
+      process.env.JWT_SECRET
     );
     // get user id from token
     const id_from_token = have_valid_token.id;

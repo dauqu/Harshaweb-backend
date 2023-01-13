@@ -24,9 +24,8 @@ router.post("/", async (req, res) => {
         const token = jwt.sign({
             id: admin_collection._id,
             email: admin_collection.email
-        }, process.env.JWT_SECRET, {
-            algorithm: "HS256",
-        })
+        }, process.env.JWT_SECRET
+        )
 
         // cookies
         res.cookie("auth_token", token, {
@@ -53,9 +52,7 @@ router.get("/check_valid_token", async (req, res) => {
     return res.json(false);
   }
 
-  const have_valid_tokem = jwt.verify(token, process.env.JWT_SECRET, {
-    algorithm: "HS256",
-  });
+  const have_valid_tokem = await jwt.verify(token, process.env.JWT_SECRET);
 
   if (!have_valid_tokem) {
     return res.json(false);
