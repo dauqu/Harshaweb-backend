@@ -31,7 +31,7 @@ router.patch("/update/:id", async (req, res) => {
     if (user_collection == null) {
       return res.status(404).json({ message: "user not found" });
     }
-    if (req.body.uniqueKey != null) {
+    if (req.body.uniqueKey !== null) {
       user.uniqueKey = req.body.uniqueKey;
     }
     const updatedUser = await user_collection.save();

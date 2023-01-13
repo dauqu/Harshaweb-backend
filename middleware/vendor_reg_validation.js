@@ -40,7 +40,7 @@ async function vendor_reg_validation(req, res, next) {
         .status(400)
         .json({ message: "phone is already exists", status: "warning" });
 
-    if (vendor_phone.length != 10)
+    if (vendor_phone.length !== 10)
       return res.status(400).json({
         message: "Please  enter valid phone number ",
         status: "warning",

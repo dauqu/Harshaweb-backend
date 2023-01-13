@@ -23,10 +23,12 @@ router.post("/", async (req, res) => {
             // Send File on Location
             const uploadedFile = req.files.uploadedFile;
             uploadedFile.mv("./uploads/" + uploadedFile.name);
+
+            let url = req.protocol+"://"+req.get("host")+"/api/imageupload/"+uploadedFile.name; 
             res.send({
                 status: "success",
                 message: "File successfully uploaded",
-                url: `http://localhost:4000/api/imageupload/${uploadedFile.name}`,
+                url
             });
         }
     } catch (err) {

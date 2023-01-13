@@ -57,7 +57,7 @@ async function resiter_validation(req, res, next) {
         .json({ message: "phone is already exists", status: "warning" });
 
     // check phone is less than 10 char
-    if (phone.length != 10)
+    if (phone.length !== 10)
       return res.status(400).json({
         message: "Please  enter valid phone number ",
         status: "warning",

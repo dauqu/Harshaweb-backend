@@ -6,7 +6,7 @@ const JWT = require("jsonwebtoken");
 require("dotenv").config();
 
 router.get("/", async (req, res) => {
-    const token = req.cookies.token != undefined || req.cookies.token != null || req.cookies.token != "";
+    const token = req.cookies.token !== undefined || req.cookies.token !== null || req.cookies.token !== "";
     if (token) {
         return res.send("")
     } 
