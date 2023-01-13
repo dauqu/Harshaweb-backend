@@ -24,7 +24,9 @@ router.post("/", async (req, res) => {
         const token = jwt.sign({
             id: admin_collection._id,
             email: admin_collection.email
-        }, process.env.JWT_SECRET)
+        }, process.env.JWT_SECRET, {
+            algorithm: "HS256",
+        })
 
         // cookies
         res.cookie("auth_token", token, {

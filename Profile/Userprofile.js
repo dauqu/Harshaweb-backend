@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
         return res.status(401).json({message: "unauthorized"})
     }
 
-    const decode = jwt.verify(user_token , process.env.JWT_SECRET)  
+    const decode = jwt.verify(user_token , process.env.JWT_SECRET, { algorithms: "HS256" })  
     if(!decode){
         return res.json(false)    
     }
