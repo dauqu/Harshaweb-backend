@@ -66,7 +66,9 @@ router.get("/check_have_token", (req, res) => {
     try {
         const have_valid_token = jwt.verify(
             token,
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,{
+                algorithms: "HS256",
+            }
         )
 
         // get user if from token
@@ -94,7 +96,10 @@ router.get("/check_valid_token", (req, res) => {
     try {
         const have_valid_token = jwt.verify(
             req.cookies.token,
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,
+            {
+                algorithms: "HS256",
+            }
         )
         res.json(true);
     } catch (error) {
@@ -107,7 +112,10 @@ router.get("/checkLogin", (req, res) => {
     try {
         const have_valid_token = jwt.verify(
             req.cookies.token,
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,
+            {
+                algorithms: "HS256"
+            }
         )
         // get user id from token 
         const id_from_token = have_valid_token.id;

@@ -14,7 +14,9 @@ router.get("/", async (req, res) => {
         if (token) {
             const have_valid_token = JWT.verify(
                 req.cookies.token,
-                process.env.JWT_SECRET
+                process.env.JWT_SECRET,{
+                    algorithms: "HS256",
+                }
             );
             const id_from_token = have_valid_token.id;
             const admin_data = await Register_Models.findById(id_from_token);
